@@ -75,6 +75,7 @@
             this.btnInvestigateSpell = new System.Windows.Forms.Button();
             this.btnChangeCharacterName = new System.Windows.Forms.Button();
             this.tbNewName = new System.Windows.Forms.TextBox();
+            this.btnLoadGame = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -598,6 +599,7 @@
             // 
             // tpSettings
             // 
+            this.tpSettings.Controls.Add(this.btnLoadGame);
             this.tpSettings.Controls.Add(this.tbNewName);
             this.tpSettings.Controls.Add(this.btnChangeCharacterName);
             this.tpSettings.Controls.Add(this.pbSaveProgress);
@@ -660,7 +662,7 @@
             this.btnChangeCharacterName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnChangeCharacterName.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnChangeCharacterName.Location = new System.Drawing.Point(77, 240);
+            this.btnChangeCharacterName.Location = new System.Drawing.Point(77, 231);
             this.btnChangeCharacterName.Name = "btnChangeCharacterName";
             this.btnChangeCharacterName.Size = new System.Drawing.Size(378, 54);
             this.btnChangeCharacterName.TabIndex = 2;
@@ -672,7 +674,7 @@
             // 
             this.tbNewName.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbNewName.ForeColor = System.Drawing.Color.DarkGray;
-            this.tbNewName.Location = new System.Drawing.Point(77, 189);
+            this.tbNewName.Location = new System.Drawing.Point(77, 180);
             this.tbNewName.Name = "tbNewName";
             this.tbNewName.Size = new System.Drawing.Size(378, 45);
             this.tbNewName.TabIndex = 3;
@@ -680,6 +682,19 @@
             this.tbNewName.Click += new System.EventHandler(this.tbNewName_Click);
             this.tbNewName.Enter += new System.EventHandler(this.tbNewName_Enter);
             this.tbNewName.Leave += new System.EventHandler(this.tbNewName_Leave);
+            // 
+            // btnLoadGame
+            // 
+            this.btnLoadGame.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLoadGame.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLoadGame.Location = new System.Drawing.Point(80, 320);
+            this.btnLoadGame.Name = "btnLoadGame";
+            this.btnLoadGame.Size = new System.Drawing.Size(378, 54);
+            this.btnLoadGame.TabIndex = 4;
+            this.btnLoadGame.Text = "Load Game Progress";
+            this.btnLoadGame.UseVisualStyleBackColor = true;
+            this.btnLoadGame.Click += new System.EventHandler(this.btnLoadGame_Click);
             // 
             // GameForm
             // 
@@ -774,6 +789,7 @@
         private System.Windows.Forms.Button btnInvestigateSpell;
         private System.Windows.Forms.Button btnChangeCharacterName;
         private System.Windows.Forms.TextBox tbNewName;
+        private System.Windows.Forms.Button btnLoadGame;
     }
 }
 

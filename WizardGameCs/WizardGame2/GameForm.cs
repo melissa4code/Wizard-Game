@@ -282,7 +282,12 @@ namespace WizardGame2
                 Refresh();
             }
 
-            File.AppendAllLines(string.Format("{0}\\{1}.txt", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Player.Name), gameLog.ToArray());
+            if (!File.Exists(string.Format("{0}\\SavedGames\\{1}.txt", Environment.CurrentDirectory, Player.Name)))
+            {
+                File.AppendAllText(string.Format("{0}\\SavedGames\\Saved Games.txt", Environment.CurrentDirectory), string.Format("{0}\n", Player.Name));
+            }
+            File.AppendAllLines(string.Format("{0}\\SavedGames\\{1}.txt", Environment.CurrentDirectory, Player.Name), gameLog.ToArray()); // TODO: include SavedGames in build
+
             pbSaveProgress.PerformStep();
             MessageBox.Show("Your game has been saved.");
             pbSaveProgress.Visible = false;
@@ -334,6 +339,26 @@ namespace WizardGame2
                 textBox.SelectAll();
                 textBox.ForeColor = Color.Black;
             }
+        }
+
+        private void btnLoadGame_Click(object sender, EventArgs e)
+        {
+            // TODO: figure out how to read the saved games file!
+            // for some reason the saved games file doesn't seem to be getting updated...
+            string[] savedGames = File.ReadAllLines(string.Format("{0}\\SavedGames\\Saved Games.txt", Environment.CurrentDirectory));
+            string gameToLoad;
+
+            if (savedGames.Length == 2)
+            {
+                gameToLoad = savedGames[0];
+            }
+            else
+            {
+                MessageBox.Show("Which game would you like to load?");
+                gameToLoad = "smile";
+            }
+
+            MessageBox.Show(string.Format("{0}\'s game was loaded.", gameToLoad));
         }
     }
 }
