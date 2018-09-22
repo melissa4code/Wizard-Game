@@ -169,22 +169,6 @@ namespace WizardGame2
         #endregion
 
         #region Control Methods
-        //Changing the player's name.
-        private void EnterNewName(object sender, KeyEventArgs e)
-        {
-            TextBox newName = (TextBox)sender;
-            if (e.KeyCode == Keys.Enter)
-            {
-                string actionMessage = Player.ChangeCharacterName(newName.Text);
-                if (actionMessage != string.Empty) { UpdateGameLog(actionMessage); }
-            }
-        }
-        private void ExitNameTextBox(object sender, EventArgs e)
-        {
-            TextBox displayName = (TextBox)sender;
-            displayName.Text = Player.Name;
-        }
-
         /// <summary>
         /// Updates the spell description box with the selected spell's details.
         /// </summary>
@@ -298,7 +282,7 @@ namespace WizardGame2
                 Refresh();
             }
 
-            File.AppendAllLines(string.Format("{0}\\SavedGame.txt", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)), gameLog.ToArray());
+            File.AppendAllLines(string.Format("{0}\\{1}.txt", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Player.Name), gameLog.ToArray());
             pbSaveProgress.PerformStep();
             MessageBox.Show("Your game has been saved.");
             pbSaveProgress.Visible = false;
@@ -311,6 +295,45 @@ namespace WizardGame2
         private void btnSaveGame_Click(object sender, EventArgs e)
         {
             SaveGame();
+        }
+
+        private void btnChangeCharacterName_Click(object sender, EventArgs e)
+        {
+            if (tbNewName.Text != "Enter New Name Here")
+            {
+                string actionMessage = Player.ChangeCharacterName(tbNewName.Text);
+                if (actionMessage != string.Empty) { UpdateGameLog(actionMessage); }
+
+                tbName.Text = Player.Name;
+                tbNewName.Text = "Enter New Name Here";
+            }
+            else
+            {
+                MessageBox.Show("Please enter your new name in the text box.", "Change Character Name");
+            }
+        }
+
+        private void tbNewName_Enter(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            textBox.Text = Player.Name;
+            textBox.SelectAll();
+        }
+
+        private void tbNewName_Leave(object sender, EventArgs e)
+        {
+            tbNewName.Text = "Enter New Name Here";
+            tbNewName.ForeColor = Color.DarkGray;
+        }
+
+        private void tbNewName_Click(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            if (textBox.ForeColor == Color.DarkGray)
+            {
+                textBox.SelectAll();
+                textBox.ForeColor = Color.Black;
+            }
         }
     }
 }
