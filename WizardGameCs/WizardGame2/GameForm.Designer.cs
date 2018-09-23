@@ -76,6 +76,7 @@
             this.btnChangeCharacterName = new System.Windows.Forms.Button();
             this.tbNewName = new System.Windows.Forms.TextBox();
             this.btnLoadGame = new System.Windows.Forms.Button();
+            this.cboSavedGames = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -599,6 +600,7 @@
             // 
             // tpSettings
             // 
+            this.tpSettings.Controls.Add(this.cboSavedGames);
             this.tpSettings.Controls.Add(this.btnLoadGame);
             this.tpSettings.Controls.Add(this.tbNewName);
             this.tpSettings.Controls.Add(this.btnChangeCharacterName);
@@ -696,6 +698,15 @@
             this.btnLoadGame.UseVisualStyleBackColor = true;
             this.btnLoadGame.Click += new System.EventHandler(this.btnLoadGame_Click);
             // 
+            // cboSavedGames
+            // 
+            this.cboSavedGames.FormattingEnabled = true;
+            this.cboSavedGames.Location = new System.Drawing.Point(80, 375);
+            this.cboSavedGames.Name = "cboSavedGames";
+            this.cboSavedGames.Size = new System.Drawing.Size(378, 28);
+            this.cboSavedGames.TabIndex = 5;
+            this.cboSavedGames.Visible = false;
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -790,6 +801,7 @@
         private System.Windows.Forms.Button btnChangeCharacterName;
         private System.Windows.Forms.TextBox tbNewName;
         private System.Windows.Forms.Button btnLoadGame;
+        private System.Windows.Forms.ComboBox cboSavedGames;
     }
 }
 

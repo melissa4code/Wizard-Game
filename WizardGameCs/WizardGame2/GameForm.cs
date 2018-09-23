@@ -285,8 +285,28 @@ namespace WizardGame2
             if (!File.Exists(string.Format("{0}\\SavedGames\\{1}.txt", Environment.CurrentDirectory, Player.Name)))
             {
                 File.AppendAllText(string.Format("{0}\\SavedGames\\Saved Games.txt", Environment.CurrentDirectory), string.Format("{0}\n", Player.Name));
+                File.AppendAllLines(string.Format("{0}\\SavedGames\\{1}.txt", Environment.CurrentDirectory, Player.Name), gameLog.ToArray());
             }
-            File.AppendAllLines(string.Format("{0}\\SavedGames\\{1}.txt", Environment.CurrentDirectory, Player.Name), gameLog.ToArray()); // TODO: include SavedGames in build
+            else
+            {
+                DialogResult result = MessageBox.Show("There is already a game with that name.\nWould you like to overwrite your saved game?", "Save Game", MessageBoxButtons.YesNo);
+                int number = 1;
+
+                if (result == DialogResult.No)
+                {
+                    while (File.Exists(string.Format("{0}\\SavedGames\\{1}{2}.txt", Environment.CurrentDirectory, Player.Name, number)))
+                    {
+                        number++;
+                    }
+
+                    File.AppendAllText(string.Format("{0}\\SavedGames\\Saved Games.txt", Environment.CurrentDirectory), string.Format("{0}{1}\n", Player.Name, number));
+                    File.AppendAllLines(string.Format("{0}\\SavedGames\\{1}{2}.txt", Environment.CurrentDirectory, Player.Name, number), gameLog.ToArray());
+                }
+                else
+                {
+                    File.AppendAllLines(string.Format("{0}\\SavedGames\\{1}.txt", Environment.CurrentDirectory, Player.Name), gameLog.ToArray());
+                }
+            }
 
             pbSaveProgress.PerformStep();
             MessageBox.Show("Your game has been saved.");
@@ -295,6 +315,12 @@ namespace WizardGame2
                                     // This would be so that if the player keeps playing, and saves the game again
                                     // it would only copy the new things into the file.
                                     // Could also investigate how to save only the "new" logged items.
+        }
+
+        void LoadGame(string loadGame)
+        {
+            MessageBox.Show(string.Format("{0}\'s game was loaded.", loadGame));
+
         }
 
         private void btnSaveGame_Click(object sender, EventArgs e)
@@ -311,6 +337,7 @@ namespace WizardGame2
 
                 tbName.Text = Player.Name;
                 tbNewName.Text = "Enter New Name Here";
+                tbNewName.ForeColor = Color.DarkGray;
             }
             else
             {
@@ -327,8 +354,11 @@ namespace WizardGame2
 
         private void tbNewName_Leave(object sender, EventArgs e)
         {
-            tbNewName.Text = "Enter New Name Here";
-            tbNewName.ForeColor = Color.DarkGray;
+            if (tbNewName.Text == Player.Name)
+            {
+                tbNewName.Text = "Enter New Name Here";
+                tbNewName.ForeColor = Color.DarkGray;
+            }
         }
 
         private void tbNewName_Click(object sender, EventArgs e)
@@ -343,22 +373,36 @@ namespace WizardGame2
 
         private void btnLoadGame_Click(object sender, EventArgs e)
         {
-            // TODO: figure out how to read the saved games file!
-            // for some reason the saved games file doesn't seem to be getting updated...
-            string[] savedGames = File.ReadAllLines(string.Format("{0}\\SavedGames\\Saved Games.txt", Environment.CurrentDirectory));
-            string gameToLoad;
+            string gameToLoad = "";
 
-            if (savedGames.Length == 2)
+            if (!cboSavedGames.Visible)
             {
-                gameToLoad = savedGames[0];
+                string[] savedGames = File.ReadAllLines(string.Format("{0}\\SavedGames\\Saved Games.txt", Environment.CurrentDirectory));
+
+                if (savedGames.Length == 0)
+                {
+                    MessageBox.Show("There are no games to load...");
+                }
+                else if (savedGames.Length == 1)
+                {
+                    gameToLoad = savedGames[0];
+                    LoadGame(gameToLoad);
+                }
+                else
+                {
+                    MessageBox.Show("Please select a game to load.");
+                    cboSavedGames.Visible = true;
+                    cboSavedGames.Items.AddRange(savedGames);
+                }
             }
             else
             {
-                MessageBox.Show("Which game would you like to load?");
-                gameToLoad = "smile";
-            }
+                gameToLoad = cboSavedGames.Text;
+                LoadGame(gameToLoad);
 
-            MessageBox.Show(string.Format("{0}\'s game was loaded.", gameToLoad));
+                cboSavedGames.Items.Clear();
+                cboSavedGames.Visible = false;
+            }
         }
     }
 }
